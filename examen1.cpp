@@ -34,6 +34,8 @@ void mostrarMenu();
 void registrarEstudiantesyNotas(string nombres[], double notas [], int &cantidad);
 void mostrarListado(string nombres[], double notas[], int cantidad);
 void calcularPromedio(double notas[], int cantidad);
+void mostrarMayorMenor(string nombres[], double notas[], int cantidad);
+void contarAprobadosReprobados(double notas[], int cantidad);
 int main(){
 
     string nombres[20]; 
@@ -78,8 +80,18 @@ int main(){
 
 
         case 4:
+        
+            mostrarMayorMenor(nombres, notas, cantidadEstudiantes); 
+
+            break;
 
 
+        case 5:
+        
+            contarAprobadosReprobados(notas, cantidadEstudiantes);
+
+            break;
+        
 
         }
         
@@ -106,7 +118,7 @@ void mostrarMenu() {
     cout << "Seleccione una opcion: "; 
 }
 
-//Funcion que permite recibir nombres de los estudiantes, notas y registrarlos
+
 void registrarEstudiantesyNotas(string nombres[], double notas[], int &cantidad) {
 
     //Validacion de la cantidad de estudiantes a registrar, mientras la cantidad seleccionada sea menor a 1 o mayor a 20
@@ -134,7 +146,6 @@ void registrarEstudiantesyNotas(string nombres[], double notas[], int &cantidad)
     }
 }
 
-//Funcion para mostrar el listado de estudiantes con sus notas, previamente guardados en la primera opcion 
 void mostrarListado(string nombres[], double notas[], int cantidad) {
     //Nos aseguramos que existan estudiantes y no dejar espacios vacios
     if (cantidad == 0) {
@@ -149,18 +160,57 @@ void mostrarListado(string nombres[], double notas[], int cantidad) {
     }
 }
 
-//Funcion para calcular el promedio general
 void calcularPromedio(double notas[], int cantidad) {
+    //Declaramos variable para operar
+    double suma = 0;
     //Nos aseguramos que existan estudiantes y no dejar espacios vacios
     if (cantidad == 0) {
         cout << "No hay estudiantes registrados." << endl; 
         return;
     }
-    double suma = 0;
-    
+  
     //Se hace un acumulador para al final esa suma se vaya acumulando y se quede guardada con las notas ingresadas y dividirlas para la cantidad correcta. 
     for (int i = 0; i < cantidad; i++) {
         suma = suma + notas[i];
     }
     cout << "Promedio general: " << suma / cantidad << endl; 
+}
+
+void mostrarMayorMenor(string nombres[], double notas[], int cantidad) {
+    //Declaramos variables para operar
+    int Mayor = 0, Menor = 0;
+    //Nos aseguramos que existan estudiantes y no dejar espacios vacios
+    if (cantidad == 0) {
+        cout << "No hay estudiantes registrados." << endl;
+        return;
+    }
+    
+    //Recorre todo el arreglo para comparar las notas
+    //Al inicializar mayor y menor con 0, primero las compara con eso, el tener la nota ingresada del primer estudiante,
+    //ahora ese 0 se compara si es mayor o si es menor, y se le asigna a mayor o menor la nota correspondiente y el nombre de quien 
+    //tiene dicha nota.
+    for (int i = 1; i < cantidad; i++) {
+        if (notas[i] > notas[Mayor]) Mayor = i; 
+        if (notas[i] < notas[Menor]) Menor = i; 
+    }
+    cout << "Nota mayor: " << notas[Mayor] << " (Estudiante: " << nombres[Mayor] << ")" << endl;
+    cout << "Nota menor: " << notas[Menor] << " (Estudiante: " << nombres[Menor] << ")" << endl;
+}
+
+void contarAprobadosReprobados(double notas[], int cantidad) {
+    //Declaro variables para esta funcion 
+    int aprobados = 0, reprobados = 0;
+    //Nos aseguramos que existan estudiantes y no dejar espacios vacios
+    if (cantidad == 0) {
+        cout << "No hay estudiantes registrados." << endl;
+        return;
+    }
+    //Bulce para contar el numero de aprobados y reprobados, if and else para saber cuando un estudiante reprobo o no poniendo la condicion.
+    //Se imprime en pantalla la cantidad de aprobados y reprobados.
+    for (int i = 0; i < cantidad; i++) {
+        if (notas[i] >= 14) aprobados = aprobados +1;
+        else reprobados = reprobados + 1; 
+    }
+    cout << "Aprobados: " << aprobados << endl;
+    cout << "Reprobados: " << reprobados << endl;
 }
