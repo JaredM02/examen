@@ -36,6 +36,7 @@ void mostrarListado(string nombres[], double notas[], int cantidad);
 void calcularPromedio(double notas[], int cantidad);
 void mostrarMayorMenor(string nombres[], double notas[], int cantidad);
 void contarAprobadosReprobados(double notas[], int cantidad);
+void buscarEstudiante(string nombres[], double notas[], int cantidad);
 int main(){
 
     string nombres[20]; 
@@ -91,16 +92,22 @@ int main(){
             contarAprobadosReprobados(notas, cantidadEstudiantes);
 
             break;
+
+
+
+        case 6:
+
+            buscarEstudiante(nombres, notas, cantidadEstudiantes);
+
+            break;
         
 
         }
-        
-        
-        
-        
+            
 
 
     }while (opcion != 7);
+
     return 0;
 
 }
@@ -213,4 +220,29 @@ void contarAprobadosReprobados(double notas[], int cantidad) {
     }
     cout << "Aprobados: " << aprobados << endl;
     cout << "Reprobados: " << reprobados << endl;
+}
+
+void buscarEstudiante(string nombres[], double notas[], int cantidad) {
+    //Nos aseguramos que existan estudiantes y no dejar espacios vacios
+    if (cantidad == 0) {
+        cout << "No hay estudiantes registrados." << endl;
+        return;
+    }
+    //Declaramos nuevas variables
+    string nombreBusqueda;
+    //Para que encontrado inicialice en false
+    bool encontrado = false;
+    cout << "Ingrese el nombre a buscar: ";
+    cin >> nombreBusqueda;
+    
+    for (int i = 0; i < cantidad; i++) { // Búsqueda secuencial 
+        if (nombres[i] == nombreBusqueda) {
+            cout << "Estudiante: " << nombres[i] << endl; 
+            cout << "Nota: " << notas[i] << endl; 
+            cout << "Estado: " << (notas[i] >= 14 ? "Aprobado" : "Reprobado") << endl;
+            encontrado = true;
+            break;
+        }
+    }
+    if (!encontrado) cout << "Estudiante no encontrado." << endl;
 }
